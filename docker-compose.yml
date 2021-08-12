@@ -1,0 +1,18 @@
+version: "3"
+services:
+  api-server:
+    build: ./api-server
+    volumes:
+      - /api-server/node_modules # Saves the node modules so it does not have to re-install
+      - ./api-server:/api-server # Saves the app folder for live development and dynamic creation of Strapi files (e.g. content types, uploads)
+    ports:
+      - "9000:9000"
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - /frontend/node_modules # Saves the node modules so it does not have to re-install
+      - ./frontend:/frontend # Mounts the host folder(s) onto the docker container for live development
+    depends_on:
+      - api-server
