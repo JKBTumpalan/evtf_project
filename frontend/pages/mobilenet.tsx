@@ -1,9 +1,9 @@
 import WebcamComponent from "../components/webcam";
 
-const Classifier1: React.FC = () => {
+const MobileNet: React.FC = () => {
   return (
     <div>
-      <div>Classifier Component 1</div>
+      <div>MobileNet Classifier</div>
       <main>
         <WebcamComponent />
       </main>
@@ -11,4 +11,4 @@ const Classifier1: React.FC = () => {
   );
 };
 
-export default Classifier1;
+export default MobileNet;

@@ -17,15 +17,15 @@ export const Navbar = () => {
           </a>
         </Link>
 
-        <Link href="/classifier1" passHref>
+        <Link href="/mobilenet" passHref>
           <a
             className={`border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6 ${
-              router.pathname === "/classifier1"
+              router.pathname === "/mobilenet"
                 ? `border-b-2 border-blue-500`
                 : ``
             }`}
           >
-            Classifier
+            Animal Classifier
           </a>
         </Link>
 
@@ -37,7 +37,7 @@ export const Navbar = () => {
                 : ``
             }`}
           >
-            Classifier 2
+            RPS Classifier
           </a>
         </Link>
 
