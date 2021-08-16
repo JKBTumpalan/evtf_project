@@ -1,9 +1,10 @@
-FROM node:16-alpine3.11
-
+FROM node
 RUN mkdir -p /api-server
 WORKDIR /api-server
 
 COPY package*.json /api-server/
+
+RUN apt-get update || : && apt-get install python -y
 
 RUN npm install --quiet
 
