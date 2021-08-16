@@ -19,7 +19,6 @@ app.post("/classify-image", (req, res) => {
     if (err) {
       res.status(500).send("Upload error.");
     } else {
-      //@ts-ignore
       classify(files.upload.path)
         .then((predictedClass) => {
           res.status(200).send({
@@ -74,7 +73,7 @@ function classify(url) {
   });
 }
 
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 server.listen(port, (req, res) => {
   console.log(`Server is up and running @ port ${port}`);

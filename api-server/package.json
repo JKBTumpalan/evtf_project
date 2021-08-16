@@ -17,6 +17,6 @@
     "fs": "*",
     "get-image-data": "^5.0.0",
     "http": "^0.0.1-security",
-    "jimp": "^0.16.1"
+    "jimp": "^0.14.0"
   }
 }
