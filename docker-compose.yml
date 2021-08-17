@@ -4,9 +4,10 @@ services:
     build: ./api-server
     volumes:
       - /api-server/node_modules # Saves the node modules so it does not have to re-install
-      - ./api-server:/api-server # Saves the app folder for live development and dynamic creation of Strapi files (e.g. content types, uploads)
+      - ./api-server:/api-server # Saves the app folder for live development and dynamic creation
     ports:
       - "9000:9000"
+    restart: unless-stopped
   frontend:
     build: ./frontend
     ports:

@@ -1,43 +1,88 @@
-const os = require("os");
-
 const express = require("express");
-const cors = require("cors");
-
 const app = express();
 
-const config = require("./config/config");
+const tf = require("@tensorflow/tfjs-node");
+const mobilenet = require("@tensorflow-models/mobilenet");
+const formidable = require("formidable");
+const image = require("get-image-data");
+const cors = require("cors");
 
-const listen = (expressApp, port) => {
+const http = require("http");
+
+const server = http.createServer(app);
+app.use(express.json({ limit: "50mb" }));
+app.use(cors());
+
+app.post("/classify-image", (req, res) => {
+  let mainClassiferUploader = new formidable.IncomingForm({
+    maxFileSize: 10485760,
+  });
+
+  mainClassiferUploader.parse(req, async (err, fields, files) => {
+    console.log(fields);
+    console.log(files);
+    if (err) {
+      res.status(500).send("Upload error.");
+    } else {
+      classify(files.upload.path)
+        .then((predictedClass) => {
+          res.status(200).send({
+            classification: predictedClass,
+          });
+        })
+        .catch((err) => res.status(500).send("Upload error"));
+    }
+  });
+});
+
+app.post("/classify-from-url", async (req, res) => {
+  console.log(req.body.url);
+  classify(req.body.url)
+    .then((predictedClass) => {
+      res.status(200).send({
+        classification: predictedClass,
+      });
+      console.log(predictedClass);
+    })
+    .catch((err) => res.status(500).send("Download/URL error."));
+});
+
+function classify(url) {
+  console.log(url);
   return new Promise((resolve, reject) => {
-    expressApp.listen(port, () => {
-      console.log(`api-server: listening on ${os.hostname()}: ${port}`);
+    image(url, async (err, image) => {
+      if (err) {
+        reject(err);
+      } else {
+        const channelCount = 3;
+        const pixelCount = image.width * image.height;
+        const vals = new Int32Array(pixelCount * channelCount);
+
+        let pixels = image.data;
+
+        for (let i = 0; i < pixelCount; i++) {
+          for (let j = 0; j < channelCount; j++) {
+            vals[i * channelCount + j] = pixels[i * 4 + j];
+          }
+        }
+
+        const outputShape = [image.height, image.width, channelCount];
+
+        //@ts-ignore
+        const input = tf.tensor3d(vals, outputShape, "int32");
+
+        const mobilenet_model = await mobilenet.load();
+
+        let pred = await mobilenet_model.classify(input);
+
+        resolve(pred);
+      }
     });
   });
-};
+}
 
-Promise.all([listen(app, config.port)])
-  .then((initializedEntities) => {
-    app.use(cors());
+const port = process.env.PORT || 9000;
 
-    /**
-     * If the middleware above this hasn't sent back a response, then there was no matching endpoint. We send back an HTTP 404.
-     */
-    app.use((req, res, next) => {
-      res.status(404);
-      res.send();
-    });
-
-    /**
-     * This is the error handling middleware, all errors that are passed to middleware are processed here.
-     */
-    app.use((error, req, res, next) => {
-      console.error(`api-server: ${error}`);
-      res.status(500);
-      res.send();
-    });
-  })
-  .catch((reason) => {
-    console.error(reason);
-
-    process.exit(1);
-  });
+server.listen(port, (req, res) => {
+  console.log(`Server is up and running @ port ${port}`);
+});
