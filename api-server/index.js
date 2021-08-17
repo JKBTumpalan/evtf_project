@@ -9,6 +9,7 @@ const image = require("get-image-data");
 const http = require("http");
 
 const server = http.createServer(app);
+app.use(express.json());
 
 app.post("/classify-image", (req, res) => {
   let mainClassiferUploader = new formidable.IncomingForm({
