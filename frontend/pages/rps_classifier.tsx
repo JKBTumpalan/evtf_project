@@ -1,7 +1,6 @@
-import WebcamComponent from "../components/webcam";
 import Head from "next/head";
 
-const MobileNet: React.FC = () => {
+const RPSClassifier: React.FC = () => {
   return (
     <div>
       <Head>
@@ -9,11 +8,10 @@ const MobileNet: React.FC = () => {
         <meta name="description" content="TensorFlow project" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <div className="flex flex-col justify-center items-center mx-auto w-screen p-4">
           <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 my-6">
-            Animal Classifier (MobileNet)
+            Rock, Paper, Scissors Classifier (CNN Model)
           </h1>
           <section className="bg-white dark:bg-gray-800">
             <div className="max-w-3xl px-6 py-16 mx-auto text-center border-2">
@@ -46,4 +44,4 @@ const MobileNet: React.FC = () => {
   );
 };
 
-export default MobileNet;
+export default RPSClassifier;
