@@ -5,11 +5,13 @@ const tf = require("@tensorflow/tfjs-node");
 const mobilenet = require("@tensorflow-models/mobilenet");
 const formidable = require("formidable");
 const image = require("get-image-data");
+const cors = require("cors");
 
 const http = require("http");
 
 const server = http.createServer(app);
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(cors());
 
 app.post("/classify-image", (req, res) => {
   let mainClassiferUploader = new formidable.IncomingForm({
@@ -17,6 +19,8 @@ app.post("/classify-image", (req, res) => {
   });
 
   mainClassiferUploader.parse(req, async (err, fields, files) => {
+    console.log(fields);
+    console.log(files);
     if (err) {
       res.status(500).send("Upload error.");
     } else {
@@ -32,16 +36,19 @@ app.post("/classify-image", (req, res) => {
 });
 
 app.post("/classify-from-url", async (req, res) => {
+  console.log(req.body.url);
   classify(req.body.url)
     .then((predictedClass) => {
       res.status(200).send({
         classification: predictedClass,
       });
+      console.log(predictedClass);
     })
     .catch((err) => res.status(500).send("Download/URL error."));
 });
 
 function classify(url) {
+  console.log(url);
   return new Promise((resolve, reject) => {
     image(url, async (err, image) => {
       if (err) {

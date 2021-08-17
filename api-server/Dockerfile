@@ -1,13 +1,13 @@
 FROM node
-RUN mkdir -p /api-server
+
 WORKDIR /api-server
 
-COPY package*.json /api-server/
+COPY package*.json ./
 
 RUN apt-get update || : && apt-get install python -y
 
 RUN npm install --quiet
 
-COPY . /api-server/
+COPY . .
 
 CMD ["node" , "index.js"]
