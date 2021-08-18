@@ -1,4 +1,3 @@
-import WebcamComponent from "../components/webcam";
 import Head from "next/head";
 import axios from "axios";
 import React, { useState } from "react";
