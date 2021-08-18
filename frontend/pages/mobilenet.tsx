@@ -12,6 +12,8 @@ const MobileNet: React.FC = () => {
     [{ probability: number; className: string }] | null
   >(null);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const post_config = {
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +32,10 @@ const MobileNet: React.FC = () => {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then((response) => setLabels(response.data.classification))
+        .then((response) => {
+          setIsLoading(false);
+          setLabels(response.data.classification);
+        })
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
@@ -46,6 +51,8 @@ const MobileNet: React.FC = () => {
       await axios
         .post("http://localhost:9000/classify-from-url", obj, post_config)
         .then((response) => {
+          setIsLoading(false);
+
           setLabels(response.data.classification);
         });
     } catch (err) {
@@ -66,6 +73,7 @@ const MobileNet: React.FC = () => {
   };
 
   const handleSubmit = () => {
+    setIsLoading(true);
     console.log("Submitting..");
     if (inputState !== -1) {
       if (inputState === 0) {
@@ -78,6 +86,8 @@ const MobileNet: React.FC = () => {
       }
     }
   };
+
+  const organizeLabels = (labels: any) => {};
 
   return (
     <div>
@@ -93,7 +103,7 @@ const MobileNet: React.FC = () => {
             Animal Classifier (MobileNet)
           </h1>
           <section className="bg-white dark:bg-gray-800">
-            <div className="px-6 py-16 mx-auto text-center border-2">
+            <div className="px-6 py-16 mx-auto text-center">
               <p className="max-w-md mx-auto mt-5 text-gray-500 dark:text-gray-400">
                 Upload your image or input an image link in the input forms.
               </p>
@@ -129,37 +139,78 @@ const MobileNet: React.FC = () => {
                 )}
 
                 <button
-                  className="px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-700 rounded-md sm:mx-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+                  className={`px-4 py-2 col text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-700 rounded-md sm:mx-2 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 ${
+                    isLoading || inputState === -1 ? "opacity-50" : ""
+                  }`}
                   onClick={handleSubmit}
+                  disabled={inputState === -1}
                 >
-                  Classify Image
+                  {isLoading ? "Processing" : "Classify Image"}
                 </button>
               </div>
             </div>
-            {isSelected ? (
-              <div className="px-6 py-16 mx-auto text-center border-2">
-                <img src={URL.createObjectURL(file)}></img>
-                <p>Filename: {file.name}</p>
-                <p>Filetype: {file.type}</p>
-                <p>Size in bytes: {file.size}</p>
-                <p>
-                  lastModifiedDate: {file.lastModifiedDate.toLocaleDateString()}
-                </p>
+            {isLoading ? (
+              <div className="flex items-center justify-center mb-10">
+                <div className="w-12 h-12 border-l-4 border-gray-900 rounded-full animate-spin"></div>
               </div>
             ) : (
               <></>
             )}
             {labels && (
-              <div>
-                {labels.map((label) => {
-                  return (
+              <div className="px-5  text-center border-b-2 pb-5">
+                <h4 className="tracking-wide text-xl font-medium text-gray-700 mb-2">
+                  {" "}
+                  This picture is{" "}
+                </h4>
+                <div>
+                  {labels && (
                     <div>
-                      This picture is {(label.probability * 100).toFixed(2)}%{" "}
-                      {label.className}!
+                      {labels.map((label, index) => {
+                        if (index === 0) {
+                          return (
+                            <h2 className="text-5xl font-extrabold tracking-wide text-blue-600 my-2">
+                              {" "}
+                              {(label.probability * 100).toFixed(2)}%{" "}
+                              {label.className},
+                            </h2>
+                          );
+                        } else {
+                          return (
+                            <div className="text-xl font-medium tracking-wide text-gray-700">
+                              {(label.probability * 100).toFixed(2)}%{" "}
+                              {label.className}
+                              {index === labels.length - 2 ? " and" : ""}
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
-                  );
-                })}
+                  )}
+                </div>
+                {inputState === 1 ? (
+                  <div className="px-6 py-16 mx-auto text-center font-mono">
+                    <img src={url} className="max-w-lg"></img>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
+            )}
+            {isSelected ? (
+              <div className="px-6 py-16 mx-auto text-center font-mono">
+                <img src={URL.createObjectURL(file)} className="max-w-lg"></img>
+                <div className="pt-4">
+                  <p>Filename: {file.name}</p>
+                  <p>Filetype: {file.type}</p>
+                  <p>Size in bytes: {file.size}</p>
+                  <p>
+                    lastModifiedDate:{" "}
+                    {file.lastModifiedDate.toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <></>
             )}
           </section>
         </div>
