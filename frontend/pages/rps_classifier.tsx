@@ -169,6 +169,13 @@ const RPSClassifier: React.FC = () => {
                 <h2 className="text-7xl font-extrabold tracking-wide text-blue-600">
                   {responseOutput(labels)}
                 </h2>
+                {inputState === 1 ? (
+                  <div className="px-6 py-16 mx-auto text-center font-mono">
+                    <img src={url} className="max-w-lg"></img>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             )}
             {isSelected ? (
