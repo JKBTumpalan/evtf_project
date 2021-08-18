@@ -178,8 +178,8 @@ const MobileNet: React.FC = () => {
                           return (
                             <div className="text-xl font-medium tracking-wide text-gray-700">
                               {(label.probability * 100).toFixed(2)}%{" "}
-                              {label.className},{" "}
-                              {index === labels.length ? "and" : ""}
+                              {label.className}
+                              {index === labels.length - 2 ? " and" : ""}
                             </div>
                           );
                         }
