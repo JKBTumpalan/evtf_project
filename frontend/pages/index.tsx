@@ -13,19 +13,19 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative opacity-70 bg-center bg-no-repeat bg-cover bg-fixed min-h-screen bg-flowers">
+      <div className="relative opacity-70 bg-center bg-no-repeat bg-cover bg-fixed min-h-screen bg-mobilenet">
         <div className="h-screen flex flex-col justify-center items-center border-2 w-100% text-center text-xl tracking-wide uppercase">
           <div className="border-2 border-black bg-white bg-opacity-20 p-5 hover:bg-yellow-50 text-black font-bold cursor-pointer">
-            <Link href="/classifier2">
-              <a>Flower Classifier</a>
+            <Link href="/mobilenet">
+              <a>MobileNet Classifier</a>
             </Link>
           </div>
           <div>
             <section className="bg-white bg-opacity-50 my-4 p-4 text-center">
               <p>
-                Classify 5 different flowers using machine learning! The flowers
-                that the machine can classify are: Daisies, Dandelions, Roses,
-                Sunflowers, and Tulips.
+                Classify different animals using the fast MobileNet model. You
+                can try uploading pictures of your favorites like flamingos,
+                sealions, snakes, or even triceratops!
               </p>
             </section>
           </div>
@@ -35,16 +35,16 @@ const Home: NextPage = () => {
       <div className="relative opacity-70 bg-center bg-no-repeat bg-cover bg-fixed min-h-screen bg-rps">
         <div className="h-screen flex flex-col justify-center items-center border-2 w-100% text-center text-xl tracking-wide uppercase">
           <div className="border-2 border-black bg-white bg-opacity-20 p-5 hover:bg-yellow-50 text-black font-bold cursor-pointer">
-            <Link href="/classifier2">
+            <Link href="/rps_classifier">
               <a>Rock-Paper-Scissors Classifier</a>
             </Link>
           </div>
           <div>
             <section className="bg-white bg-opacity-50 my-4 p-4 text-center">
               <p>
-                Classify 5 different flowers using machine learning! The flowers
-                that the machine can classify are: Daisies, Dandelions, Roses,
-                Sunflowers, and Tulips.
+                Classify different hand gestures using the Rock-Paper-Scissors
+                Convolutional Neural Network Model. You can try uploading
+                pictures of your own hands as rock, paper, or scissors!
               </p>
             </section>
           </div>
@@ -54,17 +54,13 @@ const Home: NextPage = () => {
       <div className="relative opacity-70 bg-center bg-no-repeat bg-cover bg-fixed min-h-screen bg-img1">
         <div className="h-screen flex flex-col justify-center items-center border-2 w-100% text-center text-xl tracking-wide uppercase">
           <span className="border-2 border-black bg-white bg-opacity-20 p-5 hover:bg-yellow-50 text-black font-bold cursor-pointer">
-            <Link href="/classifier2">
+            <Link href="/regressor">
               <a>Price Regressor</a>
             </Link>
           </span>
           <div>
             <section className="bg-white bg-opacity-50 my-4 p-4 text-center">
-              <p>
-                Classify 5 different flowers using machine learning! The flowers
-                that the machine can classify are: Daisies, Dandelions, Roses,
-                Sunflowers, and Tulips.
-              </p>
+              <p>SECTION TBD.</p>
             </section>
           </div>
         </div>
