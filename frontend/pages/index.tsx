@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       <div className="relative opacity-70 bg-center bg-no-repeat bg-cover bg-fixed min-h-screen bg-rps">
         <div className="h-screen flex flex-col justify-center items-center border-2 w-100% text-center text-xl tracking-wide uppercase">
           <div className="border-2 border-black bg-white bg-opacity-20 p-5 hover:bg-yellow-50 text-black font-bold cursor-pointer">
-            <Link href="/classifier2">
+            <Link href="/rps_classifier">
               <a>Rock-Paper-Scissors Classifier</a>
             </Link>
           </div>
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
       <div className="relative opacity-70 bg-center bg-no-repeat bg-cover bg-fixed min-h-screen bg-img1">
         <div className="h-screen flex flex-col justify-center items-center border-2 w-100% text-center text-xl tracking-wide uppercase">
           <span className="border-2 border-black bg-white bg-opacity-20 p-5 hover:bg-yellow-50 text-black font-bold cursor-pointer">
-            <Link href="/classifier2">
+            <Link href="/regressor">
               <a>Price Regressor</a>
             </Link>
           </span>
