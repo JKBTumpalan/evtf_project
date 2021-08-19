@@ -2,6 +2,8 @@ import Head from "next/head";
 import axios from "axios";
 import { useState } from "react";
 
+const API_DNS = "ec2-18-118-100-35.us-east-2.compute.amazonaws.com";
+
 const RPSClassifier: React.FC = () => {
   const [url, setUrl] = useState<string>("");
   const [file, setFile] = useState<any | null>(null);
@@ -23,7 +25,7 @@ const RPSClassifier: React.FC = () => {
 
     try {
       await axios
-        .post("http://localhost:9000/rps-classify-image", formData, {
+        .post(`http://${API_DNS}:9000/rps-classify-image`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -46,7 +48,7 @@ const RPSClassifier: React.FC = () => {
     console.log(obj);
     try {
       await axios
-        .post("http://localhost:9000/rps-classify-from-url", obj, post_config)
+        .post(`http://${API_DNS}:9000/rps-classify-from-url`, obj, post_config)
         .then((response) => {
           setIsLoading(false);
           setLabels(response.data.classification);
