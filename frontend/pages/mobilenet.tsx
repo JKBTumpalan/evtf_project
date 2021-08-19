@@ -1,7 +1,8 @@
-import WebcamComponent from "../components/webcam";
 import Head from "next/head";
 import axios from "axios";
 import React, { useState } from "react";
+
+const API_DNS = "ec2-18-118-100-35.us-east-2.compute.amazonaws.com";
 
 const MobileNet: React.FC = () => {
   const [url, setUrl] = useState<string>("");
@@ -27,7 +28,7 @@ const MobileNet: React.FC = () => {
 
     try {
       await axios
-        .post("http://localhost:9000/classify-image", formData, {
+        .post(`http://${API_DNS}:9000/classify-image`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -49,7 +50,7 @@ const MobileNet: React.FC = () => {
     console.log(obj);
     try {
       await axios
-        .post("http://localhost:9000/classify-from-url", obj, post_config)
+        .post(`http://${API_DNS}:9000/classify-from-url`, obj, post_config)
         .then((response) => {
           setIsLoading(false);
 
