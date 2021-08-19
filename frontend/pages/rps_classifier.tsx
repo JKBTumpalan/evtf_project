@@ -25,7 +25,7 @@ const RPSClassifier: React.FC = () => {
 
     try {
       await axios
-        .post(`http://${API_DNS}:9000/rps-classify-image`, formData, {
+        .post(`https://${API_DNS}:9000/rps-classify-image`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -48,7 +48,7 @@ const RPSClassifier: React.FC = () => {
     console.log(obj);
     try {
       await axios
-        .post(`http://${API_DNS}:9000/rps-classify-from-url`, obj, post_config)
+        .post(`https://${API_DNS}:9000/rps-classify-from-url`, obj, post_config)
         .then((response) => {
           setIsLoading(false);
           setLabels(response.data.classification);
