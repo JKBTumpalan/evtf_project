@@ -28,7 +28,7 @@ const MobileNet: React.FC = () => {
 
     try {
       await axios
-        .post(`http://${API_DNS}:9000/classify-image`, formData, {
+        .post(`https://${API_DNS}:9000/classify-image`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -50,7 +50,7 @@ const MobileNet: React.FC = () => {
     console.log(obj);
     try {
       await axios
-        .post(`http://${API_DNS}:9000/classify-from-url`, obj, post_config)
+        .post(`https://${API_DNS}:9000/classify-from-url`, obj, post_config)
         .then((response) => {
           setIsLoading(false);
 
